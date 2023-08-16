@@ -1,0 +1,17 @@
+extends templates/layout.pug
+
+block content 
+
+  section.dashboard
+     block main
+      .dashboard-game 
+        include homeDashboard.pug
+
+     block sidebar
+      .dashboard-stats
+        include stats.pug
+
+
+        include templates/footer.pug
+
+      

@@ -1,0 +1,30 @@
+{
+  "name": "chess10x",
+  "version": "1.0.0",
+  "description": "Chess10x Es hora de mejorar tu ajedrez",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "levallem",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.19.0",
+    "chess.js": "^0.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.2.3",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "mongoose": "^6.1.5",
+    "nodemailer": "^6.9.4",
+    "nodemon": "^3.0.1",
+    "pug": "^3.0.2",
+    "socket.io": "^4.4.1"
+  }
+}

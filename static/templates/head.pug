@@ -1,0 +1,24 @@
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Chess10x
+  meta(name='description' content='Chess10x - Mejora tu habilidad Tactica con Ejercicios de Ajedrez  que aumentan su dificulta y con un tiempo limitado. ')
+  meta(name='keywords' content='Chess10x ,puzzlerush,Ajedrez,chesspuzzle,chesspuzzles,free,puzzle rush,Ejercicios Tactica Gratis,Tactica Ajedrez, Ejercicos Ajedrez,Chess 10x ')
+  meta(name='author' content='Levallem')
+  meta(name='robots' content='index, follow')
+  meta(name='revisit-after' content='2 days')
+  link(rel='shortcut icon' href='img/icon.png' type='image/x-icon')
+  // Global site tag (gtag.js) - Google Analytics
+  script.
+    function setDocHeight() {
+    // Primero obtenemos la altura de la ventana gráfica y la multiplicamos por 1% para obtener un valor para una unidad vh
+    let vh = window.innerHeight * 0.01;
+    // Luego establecemos el valor en la propiedad personalizada --vh en la raíz del documento
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    addEventListener('resize', setDocHeight);
+    addEventListener('orientationchange', setDocHeight);
+    setDocHeight();
+  link(rel='stylesheet', href='/css/style.css')
+  link(rel='stylesheet', href='/css/chessboard.css')
+  link(href='https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap' rel='stylesheet')

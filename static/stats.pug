@@ -1,0 +1,73 @@
+h2 Estadisticas
+
+div.stats-links.tab
+    button.tablinks.active(onClick="openTab(event, 'personal')") Personales
+    button.tablinks(onClick="openTab(event, 'global')") Globales
+
+#personal.tabcontent.active
+    img(src='./img/puzzles10ximg-text.svg', alt=' imagen Puzzles10X', class='puzzles10ximg-text').tabcontent-img-principal
+
+    div.tabcontent-puzzles
+        div.row
+            div.time-column
+                h3
+                   img(src='./img/iconos/chronometer.svg', alt='icono Puzzles a 3 Min', class='icon-chronometer')
+                   | 3 Min
+            div.score-column
+                p #{puzzle10x.puzzle3min}
+
+    div.tabcontent-puzzles
+        div.row
+            div.time-column
+                h3
+                   img(src='./img/iconos/chronometer.svg', alt='icono Puzzles a 5 Min', class='icon-chronometer')
+                   | 5 Min
+            div.score-column
+                p #{puzzle10x.puzzle5min}  
+
+    div.tabcontent-puzzles
+        div.row
+            div.time-column
+                h3
+                   img(src='./img/iconos/chronometer.svg', alt='icono Puzzles a 10 Min', class='icon-chronometer')
+                   | 10 Min
+            div.score-column
+                p #{puzzle10x.puzzle10min}
+
+    div.tabcontent-puzzles
+        div.row
+            div.time-column
+                h3
+                   img(src='./img/iconos/chronometer.svg', alt='icono Puzzles a 15 Min', class='icon-chronometer')
+                   | 15 Min
+            div.score-column
+                p #{puzzle10x.puzzle15min}            
+
+
+#global.tabcontent
+    h3
+        img(src='./img/puzzles10ximg-text.svg', alt='Imagen Puzzles10X', class='puzzles10ximg-text')
+
+    div.classification-title
+        strong Tabla de clasificación
+
+    // Desplegable para seleccionar el tiempo 3min selecionado por defecto
+    select(id="timeSelect", class="time-select", onchange="showRankingByTime()")
+        option(value="puzzle3min", selected) 3 Min 
+        option(value="puzzle5min") 5 Min
+        option(value="puzzle10min") 10 Min
+        option(value="puzzle15min") 15 Min
+
+    // Listado de jugadores por tiempo selecionado
+    div(id="rankingByTime")
+        each user, index in users
+            div.player-ranking
+                div.player-name
+                    p= (index + 1) + '. ' + user.username
+                div.player-score
+                    p= user.totalPuzzlesDone
+
+script.
+  var users = !{JSON.stringify(users)};
+
+script(src='./js/stats.js') // Asegúrate de usar la ruta correcta a tu archivo stats.js

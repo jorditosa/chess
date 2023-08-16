@@ -1,0 +1,16 @@
+doctype html
+
+include templates/head.pug
+
+p(style='display: none;')
+  | Chess10X - A completely free way for playing Chess Puzzle Rush, where you are challenged
+  | to solve a series of chess puzzles with increasing difficulty in limited time.
+img#correct(src='img/tick.svg')
+img#wrong(src='img/cross.svg')
+// Home Page
+
+include templates/navbar.pug
+
+include templates/puzzles-10X.pug
+
+include templates/footer.pug

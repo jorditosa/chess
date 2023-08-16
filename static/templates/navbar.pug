@@ -1,0 +1,36 @@
+nav.navbar
+  ul.navbar-list
+    li
+      a(href='/')
+        img(src='./img/logo.svg' alt='logo').logo
+    if user && accountConfirmed === true
+        div.navbar-list-links
+            li(class=activeTab)   
+                a(href='/puzzles10X').flex.items-center.gap
+                    img(src='./img/iconos/puzzle.svg', alt=' icono Puzzles10x').icono-puzzles10X
+                    | Puzzles10X
+            li   
+                a(href='/tactic10X').flex.items-center.gap
+                    img(src='./img/iconos/tactic10X.svg', alt=' icono Puzzles10x').icono-puzzles10X
+                    | Tactic10X
+
+            li
+                a(href='/').flex.items-center.gap
+                    img(src='./img/iconos/user-in.svg', alt=' icono user-in').icono-user-in
+                    | #{user}
+            li 
+                p Nivel: #{level}  
+            li
+                a(href='/logout').flex.items-center.gap
+                    img(src='./img/iconos/logout.svg' alt='icono cerrar sesion').icono-cerrar-sesion
+                    | Logout       
+    else
+        div.navbar-list-links
+            li
+                a(href='/login').flex.items-center.gap
+                    img(src='./img/iconos/login.svg' alt='icono login').icono-login
+                    | Iniciar Sesi&oacute;n
+            li
+                a(href='/register').flex.items-center.gap
+                    img(src='./img/iconos/signup.svg' alt='icono signup').icono-signup
+                    | Regístrate

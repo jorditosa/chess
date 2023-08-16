@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+    include head.pug
+    body 
+    
+        - var user = username;
+        include navbar.pug
+        block content 
+
+            block main
+            block sidebar 
+
+    <div id="orientation-lock"> Por favor, mantén tu dispositivo en orientación vertical para disfrutar de la mejor experiencia. </div>
+

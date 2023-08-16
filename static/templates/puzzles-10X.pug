@@ -1,0 +1,42 @@
+#startPage
+  .head
+    div.center
+    img.Puzzles10x(src='img/puzzles10X.svg')
+    if !isUserLoggedIn
+     input#username.username(type='input', placeholder='Username', name='username', required='')
+  // html> <input type="password" class="password" placeholder="Password" name="password" id="password" required/> </html
+  .timeSelector
+    div
+      input#timeThree(type='radio' name='timeSelect' value='3' checked='')
+      label.radio(for='timeThree')  3 Min 
+    div
+      input#timeFive(type='radio' name='timeSelect' value='5' checked='')
+      label.radio(for='timeFive')  5 Min 
+    div
+      input#timeTen(type='radio' name='timeSelect' value='10' checked='')
+      label.radio(for='timeTen') 10Min
+    div
+      input#timeFifteen(type='radio' name='timeSelect' value='15' checked='')
+      label.radio(for='timeFifteen') 15Min
+  #but.pressDownButton(onclick='start()') Start
+#loadingPage
+  img.loadingGif(src='img/loading.gif')
+  p.loadingText Cargando sus ejercicios, espere unos segundo por favor
+// Game and Profile Page
+#gameDiv.game
+  #gameOver
+    p#scoreText
+    .pressDownButton(onclick='window.location.reload()') Play Again
+  #gameBoardDiv
+    #myBoard
+  #moveColorDiv
+    img(src='./img/puzzle-img.png' alt='imagen puzzle').moveColorImg
+    div.moveColor
+      //- #colorSquare
+      //- p#moveColor
+      p#timer Time
+      #solvedCounter
+    #solvedPuzzles
+    hr
+    #solvedDiv
+    p#score

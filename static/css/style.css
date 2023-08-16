@@ -1,0 +1,1002 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-darkBlue: #012243;
+    --bg-mamey: #ea6645;
+    --bg-blueLight: #00a6dc;
+    --text-darkBlue: #012243;
+    --text-white: #ffffff;
+}
+
+h1, h2, h3 {
+    padding: 10px 0;
+}
+
+/*
+    Orientación: evitar que se gire en todos los dispositivos
+*/
+#orientation-lock {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(1, 34, 67, 0.8) ;
+    color: white;
+    text-align: center;
+    padding-top: 20%;
+    font-size: 20px;
+    z-index: 1000; /* Asegúrate de que esté por encima de todo lo demás */
+}
+
+/* Mostrar el contenedor en orientación horizontal */
+@media (max-width: 800px) and (orientation: landscape) {
+    #orientation-lock {
+        display: block;
+    }
+}
+
+/*
+    UTILIDADES
+*/
+.flex {
+    display: flex;
+}
+.items-center {
+    align-items: center;
+}
+.gap {
+    gap: 5px;
+}
+.text-center {
+    text-align: center;
+}
+
+.text-blueLight {
+    color: var(--bg-blueLight);
+}
+
+.bg-blueLight {
+    background-color: var(--bg-blueLight);
+}
+
+/*  */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', Verdana, sans-serif;
+    background-color: var(--bg-darkBlue);
+}
+@media (min-width: 768px) {
+    body {
+        height: 100vh;
+    }
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#startPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-white);
+    padding: 90px 0;
+}
+
+.head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    height: 4em;
+}
+
+.heading {
+    font-size: 4em;
+    font-weight: 800;
+}
+
+#gameDiv {
+    display: none;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    gap: 20px;
+}
+
+
+/*
+    BOARD
+*/
+#myBoard {
+    width: 70vh;
+}
+
+.highlight-white {
+    background-color: #76c7e8 !important;
+}
+
+.highlight-black {
+    background-color: #268ccc !important;
+}
+
+#solvedDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    font-size: 3em;
+    color: var(--text-white)
+}
+
+#moveColorDiv {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+    color: var(--bg-mamey);
+    font-size: 3em;
+    font-weight: 600;
+    text-align: center;
+    background-color: #00a6dc;
+    border-radius: 50px;
+    height: 100%;
+}
+@media (max-width: 678px) { /* Ajusta el valor según el punto de interrupción que desees */
+    #moveColorDiv {
+      font-size: 2em; /* Cambia este valor según el tamaño que desees en dispositivos móviles */
+    }
+  }
+  
+.moveColor {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.moveColorImg {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#timer {
+    font-size: 0.8em;
+}
+
+#colorSquare {
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid var(--text-white);
+    background-color: #363236;
+}
+
+.marks {
+    width: 0.5em;
+    margin: 0px 15px;
+}
+
+#solvedPuzzles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#but {
+    font-size: 2.3em;
+    font-weight: 600;
+}
+
+#gameOver>.pressDownButton {
+    font-size: 0.8em;
+    font-weight: 800;
+}
+
+.pressDownButton {
+    background-color: var(--bg-mamey);
+    padding: 12px 24px;
+    color: var(--text-white);
+    border-radius: 6px;
+    border-bottom: 4px solid var(--bg-blueLight);
+    transition: all 0.1s ease-in-out;
+}
+
+.pressDownButton:hover {
+    border-bottom-width: 0;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+#correct {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 300px;
+    /*395 x 512*/
+    margin-top: -256px;
+    margin-left: -197.5px;
+    z-index: 999;
+    display: none;
+}
+
+#wrong {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 300px;
+    /*395 x 512*/
+    margin-top: -256px;
+    margin-left: -197.5px;
+    z-index: 999;
+    display: none;
+}
+
+#gameOver {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-white);
+    font-size: 3em;
+    font-weight: 600;
+    position: absolute;
+    background: var(--bg-darkBlue);
+    z-index: 999;
+    padding: 100px;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+.radio {
+    display: block;
+    background-color: var(--bg-blueLight);
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 10px;
+    color: var(--text-white);
+    font-size: 1.8em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+}
+
+input[type=radio]:checked+.radio {
+    border: 3px solid var(--bg-mamey);
+}
+
+.timeSelector {
+    width: 100%;
+    margin-bottom: 4em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.timeSelector div {
+    text-align: center;
+}
+
+.username {
+    font-family: inherit;
+    width: 70%;
+    border: 0;
+    border-bottom: 2px solid var(--text-white);
+    outline: 0;
+    font-size: 1.3rem;
+    color: var(--text-white);
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    margin-bottom: 4em;
+}
+
+
+#loadingPage {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.loadingGif {
+    height: 4em;
+}
+
+.loadingText {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: var(--text-white);
+}
+
+/*
+    FORM Registro y Login
+*/
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--text-white);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--bg-mamey);
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-button {
+    padding: 10px 20px;
+    background-color: var(--bg-blueLight);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    background-color: var(--bg-mamey);
+}
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+      margin: 0; /* Elimina márgenes adicionales */
+    }
+  }
+
+/*
+    FOOTER
+*/
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--bg-blueLight);
+    color: var(--text-white);
+    font-weight: 600;
+    text-align: center;
+}
+
+footer a {
+    color: var(--text-white);
+    margin: 0 10px;
+}
+
+footer a:hover {
+    color: var(--text-white);
+}
+
+/* Etiquetas multimedia para texto /margen/cambio de tamaño de relleno, etx */
+
+@media (max-width: 1220px) {
+    #moveColorDiv {
+        font-size: 2.3em;
+    }
+
+    #colorSquare {
+        width: 1.2em;
+        height: 1.2em;
+    }
+
+    #solvedDiv {
+        font-size: 3.2em;
+    }
+
+    .marks {
+        width: 0.45em;
+        margin: 0px 12px;
+    }
+
+    #gameOver {
+        font-size: 2.3em;
+    }
+}
+
+@media (max-width: 1000px) {
+    #moveColorDiv {
+        font-size: 1.8em;
+    }
+
+    #solvedDiv {
+        font-size: 2.6em;
+    }
+
+    .marks {
+        width: 0.35em;
+        margin: 0px 10px;
+    }
+
+    #gameOver {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 750px) {
+    #moveColorDiv {
+        font-size: 1.2em;
+    }
+
+    #solvedDiv {
+        font-size: 2em;
+    }
+
+    #gameOver {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 615px) {
+    .loadingText {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 500px) {
+    .logo {
+        height: 3em;
+    }
+
+    .heading {
+        font-size: 3em;
+    }
+
+    .radio {
+        display: block;
+        font-size: 1.4em;
+        text-align: center;
+    }
+
+    .timeSelector {
+        padding: 5px;
+        margin-bottom: 3em;
+    }
+
+    .pressDownButton {
+        padding: 10px 20px;
+    }
+
+    #but {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 370px) {
+    .logo {
+        height: 2.5em;
+    }
+
+    .heading {
+        font-size: 2.5em;
+    }
+
+    .radio {
+        padding: 9px 18px;
+        font-size: 1.2em;
+        margin: 10px 5px;
+    }
+
+    .timeSelector {
+        padding: 5px;
+        margin-bottom: 2.5em;
+    }
+
+    .pressDownButton {
+        padding: 9px 18px;
+    }
+
+    #but {
+        font-size: 1.9em;
+    }
+
+    .loadingText {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 320px) {
+    .logo {
+        height: 2.4em;
+    }
+
+    .heading {
+        font-size: 2.4em;
+    }
+
+    .radio {
+        padding: 8px 16px;
+        font-size: 1.1em;
+        margin: 10px 4px;
+    }
+
+    #but {
+        font-size: 1.7em;
+    }
+
+    .loadingText {
+        font-size: 1em;
+    }
+}
+
+/* Etiquetas de medios para hacer que la interfaz de usuario sea vertical para dispositivos móviles */
+
+@media (max-width: 800px) {
+    #gameDiv {
+        margin-top: 20vh;
+        grid-template-columns: 1fr;
+    }
+
+    #myBoard {
+        width: 99%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #solvedDiv {
+        height: 100%;
+    }
+
+    #moveColorDiv {
+        height: 100%;
+    }
+
+    #gameOver {
+        height: 100%;
+    }
+
+    footer {
+        display: none;
+    }
+
+    #score {
+        display: none;
+        visibility: hidden;
+        margin: 8px 0px -4px 0px;
+    }
+
+    #timer {
+        margin: 10px 0px;
+        font-size: 0.8em;
+    }
+
+    #moveColor {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0px;
+
+    }
+
+}
+
+/*
+    NAVBAR
+*/
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-blueLight);
+    color: var(--text-white);
+    font-weight: 600;
+    text-align: center;
+    z-index: 999;
+}
+
+img.logo {
+    height: 40px;
+}
+
+.navbar-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.5);
+    padding: 5px;
+}
+
+.navbar-list li {
+    list-style: none;
+    margin: 0 15px;
+}
+
+.navbar-list li a {
+    color: var(--text-white);
+    text-decoration: none;
+}
+
+.navbar-list-links {
+    width: 100%;
+    background-color: var(--bg-blueLight);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+.navbar-list-links li a {
+    font-size: 16px;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+    .navbar-list-links li a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: normal; /* Quita la negrita a la letra */
+      font-size: 12px; /* Ajustar el tamaño del texto */
+    }
+    .navbar-list-links li a img {
+      height: 20px; /* Ajustar la altura del ícono */
+      width: 20px;  /* Ajustar la anchura del ícono */
+    }
+  }
+
+@media (min-width: 768px) {
+    .navbar-list-links {
+        position: static;
+        display: flex;
+        align-items: center;
+        box-shadow: none;
+        padding: 0;
+        width: auto;
+    }
+    .navbar-list-links li a {
+        font-size: 16px;
+    }
+}
+
+
+/*
+    Mensajes del los formularios de Registro y Login
+*/
+.error {
+    color: var(--bg-mamey);
+    margin: 8px 0;
+    font-size: 20px;
+}
+
+.success {
+    color: var(--bg-blueLight);
+    margin: 8px 0;
+    font-size: 20px;
+}
+
+/*
+    DASHBOARD
+*/ 
+.dashboard {
+    width: 100%;
+    max-width: 1200px;
+    padding: 80px 5px;
+    height: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+@media (min-width: 768px) {
+    .dashboard {
+        padding: 15px 5px;
+        grid-template-columns: repeat(2, 1fr);
+        max-height: 70vh;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .dashboard {
+        padding: 20px 5px;
+        grid-template-columns: 750px 400px;
+        max-height: 70vh;
+        gap: 50px;
+    }
+}
+
+.dashboard-game {
+    background-color: #00a6dc;
+    border-radius: 50px;
+    color: #ffffff;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+@media (min-width: 768px) {
+    .dashboard-game {
+        padding: 25px;
+        justify-content: start;
+    }
+}
+@media (min-width: 1200px) {
+    .dashboard-game {
+        padding: 50px;
+        justify-content: start;
+    }
+}
+
+.dashboard-game-link {
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    padding: 15px 0;
+    gap: 25px;
+}
+.dashboard-game-link img {
+    width: 120px;
+}
+@media (min-width: 1200px) {
+    .dashboard-game-link {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .dashboard-game-link img {
+        width: 180px;
+    }
+}
+.dashboard-game-link p{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.dashboard-stats {
+    background-color: #00a6dc;
+    border-radius: 50px;
+    color: #ffffff;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@media (min-width: 768px) {
+    .dashboard-stats {
+        padding: 50px;
+    }
+}
+
+.btn-dashboard {
+    display: block;
+    background-color: var(--bg-mamey);
+    padding: 4px 24px;
+    color: var(--text-white);
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 50px;
+    transition: all 0.1s ease-in-out;
+    text-decoration: none;
+}
+@media (min-width: 768px) {
+    .btn-dashboard {
+        padding: 6px 32px;
+        font-size: 24px;
+    }
+}
+
+/*
+    ICONOS
+*/
+.icono-cerrar-sesion {
+    width: 30px;
+}
+
+.icono-puzzles10X {
+    width: 30px;
+}
+
+.icono-user-in {
+    width: 30px;
+}
+
+.icono-login {
+    width: 30px;
+}
+
+.icono-signup {
+    width: 30px;
+}
+
+.icon-chronometer {
+    width: 30px; /* Ajusta el tamaño según lo necesites */
+    vertical-align: middle; /* Alinea el icono verticalmente con el texto */
+    margin-right: 10px; /* Ajusta este valor según la separación que desees */
+  }
+ 
+
+/*
+    ESTADISTICAS / STATS
+*/
+.stats-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.tab {
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.tab button {
+    background-color: inherit;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.tab button:hover {
+    background-color: var(--bg-mamey);
+}
+
+.tab button.active {
+    background-color: var(--bg-mamey);
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+}
+
+.tabcontent.active {
+    display: block;
+    padding: 6px 12px;
+}
+
+.tabcontent-users-stats {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tabcontent .tabcontent-img-principal {
+    width: 120px;
+}
+@media (min-width: 768px) {
+    .tabcontent .tabcontent-img-principal {
+        width: 180px;
+    }
+}
+
+/* #personal.tabcontent Pagina stat */
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Centra el contenido verticalmente */
+  }
+  
+  .time-column {
+    display: flex; /* Ajusta según lo necesites */
+    text-align: center; /* Centra el contenido horizontalmente */
+    margin-right: 100px;
+  }
+  
+  .score-column {
+    display: flex; /* Ajusta según lo necesites */
+    text-align: center; /* Centra el contenido horizontalmente */
+    font-weight: bold; /* Texto en negrita */
+    margin-right: 20px;
+  }
+  /* #global.tabcontent Pagina stat */
+  .classification-title {
+    font-weight: bold; /* Texto en negrita */
+    font-size: 24px; /* Tamaño de la fuente, ajústalo según lo necesites */
+    margin-bottom: 20px; /* Espacio adicional debajo del título, ajústalo según lo necesites */
+}
+/* aplica negrita a toda la pestaña global */
+#global.tabcontent {
+    font-weight: bold;
+  }
+  .player-ranking {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .player-name {
+    font-weight: bold; /* Texto en negrita para los nombres */
+    flex: 1;           /* Ocupar todo el espacio disponible */
+    text-align: left;  /* Alinear el texto a la izquierda */
+  }
+  
+  .player-score {
+    text-align: right; /* Alinear el texto a la derecha */
+    width: 50px;       /* Ancho fijo para los números, ajústalo según lo necesites */
+  }
+
+  .time-select {
+    font-weight: bold;    /* Texto en negrita */
+    width: 200px;         /* Ancho de la barra de selección, ajústalo según lo necesites */
+    margin-bottom: 20px;  /* Margen de separación con el listado de jugadores */
+  }
+  
+
+/* Estilos para centrar la imagen de Puzzles 10X en la página */
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Estilo específico para la imagen de Puzzles 10X */
+  .Puzzles10x {
+    width: 200px; /* Puedes ajustar esto según el tamaño que quieras */
+  }
+  
+  /* Marca la Ventana Activa en el Menu Navegacion */
+  .active-tab, .navbar-list a:hover {
+    font-weight: bold;
+    color: var(--bg-darkBlue);
+  }
+  
+  /* Estilos para centrar la imagen de Puzzles 10X en la página stat */
+  .puzzles10ximg-text {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px; /* Ajusta este valor según la separación que desees */
+  }
+    /* aplica negrita a toda la pestaña global */
+  #global.tabcontent {
+    font-weight: bold;
+  }
+  .time-select {
+    font-weight: bold;    /* Texto en negrita */
+    width: 200px;         /* Ancho de la barra de selección, ajústalo según lo necesites */
+    margin-bottom: 20px;  /* Margen de separación con el listado de jugadores */
+  }
+  

@@ -1,0 +1,21 @@
+extends templates/layout.pug
+
+block content 
+
+  h1.text-blueLight Registrate
+
+  if errors
+      each error in errors
+          p.error= error.msg
+
+  if success
+      p.success= success.msg
+
+  form.form-container(action='/register' method='post' novalidate='')
+    input#username.form-input(type='text' placeholder='Nombre de Usuario' name='username')
+    input#email.form-input(type='email' placeholder='Correo Electronico' name='email')
+    input#password.form-input(type='password' placeholder='Contraseña' name='password')
+    input#password2.form-input(type='password' placeholder='Repite la Contraseña' name='password2')
+    button.form-button(type='submit') Registrate
+
+  include templates/footer.pug
